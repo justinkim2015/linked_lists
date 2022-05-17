@@ -66,6 +66,39 @@ class LinkedList
     end
     print "( #{@tail.value} ) "
   end
+
+  def pop###
+    current = @head
+    until current.next.nil?
+      current = current.next
+    end
+    last_node = current
+    @tail = nil
+    last_node
+  end
+
+  def contains?(value)
+    current = @head
+    until current.next.nil?
+      current = current.next
+      return true if current.value == value
+    end
+    return false if current.next.nil?
+  end
+
+  def find(value)
+    current = @head
+    index = 0
+    if current.value == value
+      index
+    else
+      until current.next.nil?
+        index += 1
+        current = current.next
+        return index if current.value == value
+      end
+    end
+  end
 end
 
 # Each individual node
@@ -82,5 +115,3 @@ list = LinkedList.new
 10.times do
   list.append(rand(10))
 end
-
-list.at(0)
