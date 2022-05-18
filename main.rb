@@ -67,14 +67,14 @@ class LinkedList
     print "( #{@tail.value} ) "
   end
 
-  def pop###
+  def pop
     current = @head
     until current.next.nil?
+      second_last = current
       current = current.next
     end
-    last_node = current
-    @tail = nil
-    last_node
+    second_last.next = nil
+    @tail = second_last
   end
 
   def contains?(value)
@@ -97,6 +97,37 @@ class LinkedList
         current = current.next
         return index if current.value == value
       end
+    end
+  end
+
+  def insert_at(value, index)
+    current = @head
+    i = 0
+    node = Node.new(value)
+    if index.zero?
+      prepend(value)
+    else
+      until index == i
+        i += 1
+        temp = current
+        current = current.next
+      end
+      temp.next = node
+      node.next = current
+    end
+  end
+
+  def remove_at(index)
+    current = @head
+    i = 1
+    if index.zero?
+      @head = @head.next
+    else
+      until index == i
+        i += 1
+        current = current.next
+      end
+      current.next = current.next.next
     end
   end
 end
