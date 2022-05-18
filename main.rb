@@ -13,8 +13,8 @@ class LinkedList
       current = @head
       current = current.next until current.next.nil?
       current.next = this_node
-      @tail = this_node
     end
+    @tail = this_node
   end
 
   def prepend(value)
@@ -35,7 +35,7 @@ class LinkedList
       count += 1
       current = current.next
     end
-    puts "There are currently #{count} nodes"
+    count
   end
 
   def head
@@ -48,12 +48,8 @@ class LinkedList
 
   def at(index)
     current = @head
-    i = 0
-    unless index.zero?
-      until i == index
-        current = current.next
-        i += 1
-      end
+    index.times do
+      current = current.next
     end
     current.value
   end
@@ -69,21 +65,24 @@ class LinkedList
 
   def pop
     current = @head
-    until current.next.nil?
-      second_last = current
-      current = current.next
+    if size <= 1
+      @head = nil
+      @tail = nil
+    else
+      current = current.next until current.next == @tail
+      current.next = nil
+      @tail = current
     end
-    second_last.next = nil
-    @tail = second_last
   end
 
   def contains?(value)
     current = @head
+    contains = false
     until current.next.nil?
+      contains = true if current.value == value
       current = current.next
-      return true if current.value == value
     end
-    return false if current.next.nil?
+    contains
   end
 
   def find(value)
